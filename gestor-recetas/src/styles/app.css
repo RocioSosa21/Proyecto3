@@ -1,0 +1,165 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f7f8;
+    color: #222;
+}
+
+/* HEADER */
+
+header{
+    background-color: #4db6ac;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+
+nav{
+    margin-top: 10px;
+}
+
+nav a{
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover{
+    color: #e0f2f1;
+}
+/* CONTENEDOR */
+
+.container{
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+/* BUSCADOR */
+
+input{
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* GRID RECETAS */
+
+.recetas-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+/* CARD */
+
+.card{
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    padding-bottom: 20px;
+}
+
+.card:hover{
+    transform: translateY(-5px);
+}
+
+.card img{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.card h3{
+    padding: 15px;
+}
+
+.card p{
+    padding: 0 15px;
+}
+
+/* BOTONES */
+
+button{
+    background-color: #26a69a;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px 15px;
+    transition: 0.3s;
+}
+
+button:hover{
+    background-color: #00897b;
+}
+
+/* LINKS */
+
+.card a{
+    display: inline-block;
+    margin-left: 15px;
+    color: #00796b;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card a:hover{
+    text-decoration: underline;
+}
+
+/* DETALLE */
+
+.detalle{
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+}
+
+.detalle img{
+    width: 100%;
+    max-width: 500px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.detalle ul{
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.detalle p{
+    line-height: 1.6;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    header h1{
+        font-size: 24px;
+    }
+
+    .detalle{
+        padding: 15px;
+    }
+
+    button{
+        width: calc(100% - 30px);
+    }
+}

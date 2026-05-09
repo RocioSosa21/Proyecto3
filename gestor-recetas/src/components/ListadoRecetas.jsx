@@ -1,29 +1,37 @@
-import { useFetch } from "../hooks/useFetch";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useFetch } from "../hooks/useFetch";
 import { useRecetasStore } from "../store/recetasStore";
-
-const API_URL =
-"https://www.themealdb.com/api/json/v1/1/search.php?s=";
 
 export const ListadoRecetas = () => {
 
+    const [busqueda, setBusqueda] = useState("");
+
+    const API_URL =
+    `https://www.themealdb.com/api/json/v1/1/search.php?s=${busqueda}`;
+
     const { data, loading, error } = useFetch(API_URL);
-    const agregarFavorito = useRecetasStore((state) => state.agregarFavorito);
 
-    if (loading) {
-        return <h2>Cargando recetas...</h2>;
-    }
-
-    if (error) {
-        return <h2>{error}</h2>;
-    }
+    const agregarFavorito =
+    useRecetasStore((state) => state.agregarFavorito);
 
     return (
-        <div>
+        <div className="container">
 
             <h2>🍳 Recetas Disponibles</h2>
 
-            {data.meals?.map((receta) => (
+            <input
+                type="text"
+                placeholder="Buscar receta..."
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+            />
+
+            {loading && <h2>Cargando...</h2>}
+
+            {error && <h2>{error}</h2>}
+
+            {!loading && data.meals?.map((receta) => (
 
                 <div key={receta.idMeal}>
 
@@ -35,6 +43,8 @@ export const ListadoRecetas = () => {
 
                     <h3>{receta.strMeal}</h3>
 
+                    <p>{receta.strCategory}</p>
+
                     <Link to={`/receta/${receta.idMeal}`}>
                         Ver receta
                     </Link>
@@ -45,10 +55,13 @@ export const ListadoRecetas = () => {
                         ❤️ Favorito
                     </button>
 
-                    <p>{receta.strCategory}</p>
-
                 </div>
             ))}
+
+            {!loading && !data.meals && (
+                <h3>No se encontraron recetas</h3>
+            )}
+
         </div>
     );
 };

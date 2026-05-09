@@ -20,25 +20,73 @@ export const RecetaDetalle = () => {
 
     const receta = data.meals?.[0];
 
+    // Lista de ingredientes
+    const ingredientes = [];
+
+    for (let i = 1; i <= 20; i++) {
+
+        const ingrediente = receta[`strIngredient${i}`];
+        const medida = receta[`strMeasure${i}`];
+
+        if (ingrediente && ingrediente.trim() !== "") {
+
+            ingredientes.push(
+                `${medida} ${ingrediente}`
+            );
+        }
+    }
+
     return (
-        <div>
+        <div className="container">
 
-            <h1>{receta.strMeal}</h1>
+            <div className="detalle">
 
-            <img
-                src={receta.strMealThumb}
-                alt={receta.strMeal}
-                width="400"
-            />
+                <h1>{receta.strMeal}</h1>
 
-            <h3>Categoría:</h3>
-            <p>{receta.strCategory}</p>
+                <img
+                    src={receta.strMealThumb}
+                    alt={receta.strMeal}
+                    width="400"
+                />
 
-            <h3>País:</h3>
-            <p>{receta.strArea}</p>
+                <h3>📂 Categoría:</h3>
+                <p>{receta.strCategory}</p>
 
-            <h3>Instrucciones:</h3>
-            <p>{receta.strInstructions}</p>
+                <h3>🌎 País:</h3>
+                <p>{receta.strArea}</p>
+
+                <h3>🧂 Ingredientes:</h3>
+
+                <ul>
+                    {ingredientes.map((item, index) => (
+                        <li key={index}>
+                            {item}
+                        </li>
+                    ))}
+                </ul>
+
+                <h3>👨‍🍳 Procedimiento:</h3>
+
+                <p>{receta.strInstructions}</p>
+
+                {receta.strYoutube && (
+
+                    <div>
+
+                        <h3>🎥 Video de la receta:</h3>
+
+                        <a
+                            href={receta.strYoutube}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            Ver en YouTube
+                        </a>
+
+                    </div>
+                )}
+
+            </div>
 
         </div>
     );

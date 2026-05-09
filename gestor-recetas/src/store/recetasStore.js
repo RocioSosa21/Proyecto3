@@ -1,8 +1,11 @@
 import { create } from "zustand";
 
+const favoritosGuardados =
+JSON.parse(localStorage.getItem("favoritos")) || [];
+
 export const useRecetasStore = create((set) => ({
 
-    favoritos: [],
+    favoritos: favoritosGuardados,
 
     agregarFavorito: (receta) =>
 
@@ -13,20 +16,43 @@ export const useRecetasStore = create((set) => ({
             );
 
             if (existe) {
-                return state;
+                return {
+                    favoritos: state.favoritos
+                };
             }
 
+            const nuevosFavoritos = [
+                ...state.favoritos,
+                receta
+            ];
+
+            localStorage.setItem(
+                "favoritos",
+                JSON.stringify(nuevosFavoritos)
+            );
+
             return {
-                favoritos: [...state.favoritos, receta],
+                favoritos: nuevosFavoritos,
             };
         }),
 
     eliminarFavorito: (id) =>
 
-        set((state) => ({
-            favoritos: state.favoritos.filter(
+        set((state) => {
+
+            const nuevosFavoritos =
+            state.favoritos.filter(
                 (receta) => receta.idMeal !== id
-            ),
-        })),
+            );
+
+            localStorage.setItem(
+                "favoritos",
+                JSON.stringify(nuevosFavoritos)
+            );
+
+            return {
+                favoritos: nuevosFavoritos,
+            };
+        }),
 
 }));
