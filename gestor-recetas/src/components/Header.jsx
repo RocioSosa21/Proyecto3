@@ -3,7 +3,7 @@ import { useRecetasStore } from "../store/recetasStore";
 
 export const Header = () => {
 
-    const cantidadFavoritos = useRecetasStore((state) => state.favoritos.length);
+    const favoritos = useRecetasStore((state) => state.favoritos);
 
     return (
 
@@ -20,7 +20,7 @@ export const Header = () => {
                 {" | "}
 
                 <Link to="/favoritos">
-                    ❤️ Favoritos: {cantidadFavoritos}
+                    ❤️ Favoritos: {favoritos.length}
                 </Link>
             </nav>
 
