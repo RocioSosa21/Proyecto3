@@ -1,58 +1,43 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-const favoritosGuardados =
-JSON.parse(localStorage.getItem("favoritos")) || [];
+export const useRecetasStore = create(
+    persist(
+        (set) => ({
 
-export const useRecetasStore = create((set) => ({
+            favoritos: [],
 
-    favoritos: favoritosGuardados,
+            agregarFavorito: (receta) =>
 
-    agregarFavorito: (receta) =>
+                set((state) => {
 
-        set((state) => {
+                    const existe = state.favoritos.find(
+                        (item) => item.idMeal === receta.idMeal
+                    );
 
-            const existe = state.favoritos.find(
-                (item) => item.idMeal === receta.idMeal
-            );
+                    if (existe) {
+                        return state;
+                    }
 
-            if (existe) {
-                return {
-                    favoritos: state.favoritos
-                };
-            }
+                    return {
+                        favoritos: [
+                            ...state.favoritos,
+                            receta
+                        ],
+                    };
+                }),
 
-            const nuevosFavoritos = [
-                ...state.favoritos,
-                receta
-            ];
+            eliminarFavorito: (id) =>
 
-            localStorage.setItem(
-                "favoritos",
-                JSON.stringify(nuevosFavoritos)
-            );
+                set((state) => ({
+                    favoritos: state.favoritos.filter(
+                        (receta) => receta.idMeal !== id
+                    ),
+                })),
 
-            return {
-                favoritos: nuevosFavoritos,
-            };
         }),
-
-    eliminarFavorito: (id) =>
-
-        set((state) => {
-
-            const nuevosFavoritos =
-            state.favoritos.filter(
-                (receta) => receta.idMeal !== id
-            );
-
-            localStorage.setItem(
-                "favoritos",
-                JSON.stringify(nuevosFavoritos)
-            );
-
-            return {
-                favoritos: nuevosFavoritos,
-            };
-        }),
-
-}));
+        {
+            name: "favoritos-storage",
+        }
+    )
+);
